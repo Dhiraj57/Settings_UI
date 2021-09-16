@@ -17,12 +17,22 @@ public enum Hand
 
 public class ControlsHandler : MonoBehaviour
 {
-    private Handling handlingType;
-    private Hand handType;
+    public Handling handlingType;
+    public Hand handType;
+    private SettingsData data;
+
+    private void Start()
+    {
+        data = SaveSystem.LoadSettings();
+        handlingType = data.handlingType;
+        handType = data.handType;
+    }
 
     public void HandlingControls(int value)
     {
-        switch(value)
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+
+        switch (value)
         {
             case 0:
                 handlingType = Handling.steering;
@@ -37,13 +47,12 @@ public class ControlsHandler : MonoBehaviour
                 handlingType = Handling.steering;
                 break;
         }
-
-        Debug.Log(handlingType);
-
     }
 
     public void SelectHand(int value)
     {
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+
         switch (value)
         {
             case 0:
@@ -56,17 +65,33 @@ public class ControlsHandler : MonoBehaviour
                 handType = Hand.right;
                 break;
         }
-
-        Debug.Log(handType);
     }
 
     public void SoundControl(bool tag)
     {
-        Debug.Log(tag);
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+
+        if(!tag)
+        {
+            SoundManager.Instance.SetSoundVolume(0);
+        }
+        else
+        {
+            SoundManager.Instance.SetSoundVolume(1);
+        }
     }
 
     public void MusicControl(bool tag)
     {
-        Debug.Log(tag);
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+        
+        if(!tag)
+        {
+            SoundManager.Instance.SetMusicVolume(0);
+        }
+        else
+        {
+            SoundManager.Instance.SetMusicVolume(1);
+        }
     }
 }

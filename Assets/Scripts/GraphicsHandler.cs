@@ -7,33 +7,55 @@ using TMPro;
 public class GraphicsHandler : MonoBehaviour
 {
     Resolution[] resolutions;
+    [HideInInspector] public int resolutionIndex;
+    [HideInInspector] public int qualityIndex;
+
+    private SettingsData data;
 
     [SerializeField] private TMP_Dropdown resolutionDropdown;
 
     private void Start()
     {
+        data = SaveSystem.LoadSettings();
+        
+        qualityIndex = data.qualityIndex;
+
         ResolutionSetting();
+        InitialSetttings();
     }
 
-    public void Fullscreen(bool tag)
+    private void InitialSetttings()
     {
-        Debug.Log(tag);
+        QualitySettings.SetQualityLevel(qualityIndex);
+        resolutionIndex = data.resolutionIndex;
+
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+
+        resolutionDropdown.value = resolutionIndex;
+        resolutionDropdown.RefreshShownValue();
     }
 
     public void SetQuality(int value)
     {
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         QualitySettings.SetQualityLevel(value);
+
+        qualityIndex = value;
     }
 
     public void SetFullscreen(bool isFullscreen)
     {
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         Screen.fullScreen = isFullscreen;
     }
 
     public void SetResolution(int resolutionIndex)
     {
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        this.resolutionIndex = resolutionIndex;
     }
 
     private void ResolutionSetting()
@@ -55,6 +77,6 @@ public class GraphicsHandler : MonoBehaviour
         }
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        resolutionDropdown.RefreshShownValue();       
     }
 }

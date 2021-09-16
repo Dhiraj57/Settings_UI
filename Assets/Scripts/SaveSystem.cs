@@ -4,15 +4,15 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem 
 {
-    public static void SavePlayer(MenuHandler menu)
+    public static void SaveSettings(PassData data)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/settings.txt";
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SettingsData data = new SettingsData();
+        SettingsData saveData = new SettingsData(data);
 
-        formatter.Serialize(stream, data);
+        formatter.Serialize(stream, saveData);
         stream.Close();
     }
 
@@ -24,10 +24,10 @@ public static class SaveSystem
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
 
-            SettingsData data =  formatter.Deserialize(stream) as SettingsData;
+            SettingsData loadData =  formatter.Deserialize(stream) as SettingsData;
             stream.Close();
 
-            return data;
+            return loadData;
         }
         else
         {
