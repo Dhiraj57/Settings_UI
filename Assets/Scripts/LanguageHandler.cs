@@ -12,12 +12,17 @@ public enum Language
 
 public class LanguageHandler : MonoBehaviour
 {
-    [SerializeField] private PassData data;
     public Language language;
+
+    private void Start()
+    {
+        language = SaveSystem.LoadSettings().language;
+    }
 
     public void SelectLanguage(int index)
     {
-        switch(index)
+        SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
+        switch (index)
         {
             case 0:
                 language = Language.English;
@@ -43,8 +48,6 @@ public class LanguageHandler : MonoBehaviour
                 language = Language.German;
                 break;
         }
-
-        LocalizationManager.Instance.LoadLocalizedText(language + ".json");    
     }
 
 }

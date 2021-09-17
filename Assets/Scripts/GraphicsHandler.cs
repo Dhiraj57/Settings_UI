@@ -18,6 +18,7 @@ public class GraphicsHandler : MonoBehaviour
         data = SaveSystem.LoadSettings();
         
         qualityIndex = data.qualityIndex;
+        resolutionIndex = data.resolutionIndex;
 
         ResolutionSetting();
         InitialSetttings();
@@ -26,7 +27,7 @@ public class GraphicsHandler : MonoBehaviour
     private void InitialSetttings()
     {
         QualitySettings.SetQualityLevel(qualityIndex);
-        resolutionIndex = data.resolutionIndex;
+        //resolutionIndex = data.resolutionIndex;
 
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);

@@ -114,6 +114,7 @@ public class MenuHandler : MonoBehaviour
         settingsUI.SetActive(false);
         mainMenuUI.SetActive(true);
         SaveSystem.SaveSettings(data);
+        LocalizationManager.Instance.LoadLocalizedText(SaveSystem.LoadSettings().language + ".json");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
