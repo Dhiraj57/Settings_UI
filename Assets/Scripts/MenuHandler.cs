@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum ButtonListType
@@ -46,7 +44,6 @@ public class MenuHandler : MonoBehaviour
 
     public void Settings()
     {
-        //SoundManager.Instance.Play(SoundManager.Sounds.ButtonClick);
         settingsUI.SetActive(true);
         mainMenuUI.SetActive(false);
 
@@ -116,8 +113,8 @@ public class MenuHandler : MonoBehaviour
     {
         settingsUI.SetActive(false);
         mainMenuUI.SetActive(true);
-
         SaveSystem.SaveSettings(data);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 }

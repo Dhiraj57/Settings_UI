@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
@@ -10,7 +9,7 @@ public class LocalizationManager : MonoBehaviour
 
     private Dictionary<string, string> localizedText;
     private bool isReady = false;
-    private string missingText = "Localized text not found";
+    private string missingText = "Text not found";
 
 
     private void Awake()
@@ -28,13 +27,14 @@ public class LocalizationManager : MonoBehaviour
 
     private void Start()
     {
-        LoadLocalizedText("English.json");
+        LoadLocalizedText(SaveSystem.LoadSettings().language + ".json");
     }
 
     public void LoadLocalizedText(string fileName)
     {
         localizedText = new Dictionary<string, string>();
         string filePath = Path.Combine(Application.streamingAssetsPath, fileName);
+
         if(File.Exists(filePath))
         {
             string dataAsJason = File.ReadAllText(filePath);
@@ -44,10 +44,6 @@ public class LocalizationManager : MonoBehaviour
             {
                 localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
             }
-        }
-        else
-        {
-            Debug.Log("File not found");
         }
 
         isReady = true;

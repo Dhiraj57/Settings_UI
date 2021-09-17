@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ButtonState : MonoBehaviour
@@ -34,7 +32,9 @@ public class ButtonState : MonoBehaviour
                 button[SaveSystem.LoadSettings().qualityIndex].enabled = false;
                 break;
 
-            case ButtonListType.languageType:
+            case ButtonListType.languageType:              
+                button[(int)SaveSystem.LoadSettings().language].gameObject.GetComponent<Image>().color = disabledColor;
+                button[(int)SaveSystem.LoadSettings().language].enabled = false;
                 break;
         }
     }

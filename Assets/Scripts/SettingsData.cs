@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 [System.Serializable]
 public class SettingsData 
 {
@@ -10,6 +7,7 @@ public class SettingsData
     public Hand handType;
     public int resolutionIndex;
     public int qualityIndex;
+    public Language language;
 
     public SettingsData(PassData data)
     {
@@ -18,5 +16,6 @@ public class SettingsData
         menuSelected = data.menuSelected;
         handlingType = data.handlingType;
         handType = data.handType;
+        language = data.language;
     }
 }
