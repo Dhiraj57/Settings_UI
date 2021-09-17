@@ -5,7 +5,31 @@ using System.IO;
 
 public class LocalizationManager : MonoBehaviour
 {
+    private static LocalizationManager instance;
+    public static LocalizationManager Instance { get { return instance; } }
+
     private Dictionary<string, string> localizedText;
+    private bool isReady = false;
+    private string missingText = "Localized text not found";
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        LoadLocalizedText("English.json");
+    }
 
     public void LoadLocalizedText(string fileName)
     {
@@ -21,5 +45,27 @@ public class LocalizationManager : MonoBehaviour
                 localizedText.Add(loadedData.items[i].key, loadedData.items[i].value);
             }
         }
+        else
+        {
+            Debug.Log("File not found");
+        }
+
+        isReady = true;
+    }
+
+    public string GetLocalizedValue(string key)
+    {
+        string result = missingText;
+        if(localizedText.ContainsKey(key))
+        {
+            result = localizedText[key];
+        }
+
+        return result;
+    }
+
+    public bool GetIsReady()
+    {
+        return isReady;
     }
 }
